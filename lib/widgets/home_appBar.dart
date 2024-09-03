@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:gadget_shop/screens/cart_screen.dart';
 
 class HomeAppBar extends StatefulWidget {
   const HomeAppBar({super.key});
@@ -40,7 +41,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
             badgeStyle: const badges.BadgeStyle(
                 badgeColor: Color.fromARGB(255, 253, 62, 62)),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartScreen()));
+              },
               child: const Icon(
                 Icons.shopping_bag_outlined,
                 color: Colors.white,
