@@ -19,6 +19,7 @@ dependencies:
 
   # Badges package for displaying badges in your application.
   badges: ^3.1.2
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:

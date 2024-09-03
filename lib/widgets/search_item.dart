@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/widgets/categories.dart';
+import 'package:gadget_shop/widgets/items_widget.dart';
 
 class SearchItem extends StatefulWidget {
   const SearchItem({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class _SearchItemState extends State<SearchItem> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 15),
-      height: 500,
       decoration: const BoxDecoration(
           color: Color.fromARGB(136, 226, 215, 215),
           borderRadius: BorderRadius.only(
@@ -54,7 +54,23 @@ class _SearchItemState extends State<SearchItem> {
                   color: Colors.deepPurple),
             ),
           ),
+          //categories
           Categories(),
+
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: const Text(
+              "Best Selling",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple),
+            ),
+          ),
+
+          //Items wiedget
+          ItemsWidget(),
         ],
       ),
     );

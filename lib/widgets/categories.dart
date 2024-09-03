@@ -14,18 +14,18 @@ class _CategoriesState extends State<Categories> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          for (int i = 0; i < 8; i++)
+          for (int i = 1; i < 5; i++)
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 242, 247, 241),
+                  color: const Color.fromARGB(255, 242, 247, 241),
                   borderRadius: BorderRadius.circular(20)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/images/1.png",
+                    "assets/images/$i.png",
                     height: 40,
                     width: 40,
                   ),

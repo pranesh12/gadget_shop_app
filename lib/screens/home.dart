@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/store.dart';
@@ -29,16 +30,15 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[selectedIdx],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.business), label: "Store"),
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: "WhishList"),
+          Icon(Icons.home),
+          Icon(Icons.business),
+          Icon(Icons.school),
           // BottomNavigationBarItem(icon: Icon(Icons.school), label: "Profile"),
         ],
-        currentIndex: selectedIdx,
+        index: selectedIdx,
         onTap: _onTap,
-        selectedItemColor: Colors.green,
       ),
     );
   }
