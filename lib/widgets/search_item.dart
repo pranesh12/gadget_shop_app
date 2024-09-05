@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/widgets/categories.dart';
-import 'package:gadget_shop/widgets/items_widget.dart';
 
 class SearchItem extends StatefulWidget {
   const SearchItem({Key? key}) : super(key: key);
@@ -15,7 +13,6 @@ class _SearchItemState extends State<SearchItem> {
     return Container(
       padding: const EdgeInsets.only(top: 15),
       decoration: const BoxDecoration(
-          color: Color.fromARGB(136, 245, 245, 245),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15), topRight: Radius.circular(15))),
       child: Column(
@@ -23,11 +20,15 @@ class _SearchItemState extends State<SearchItem> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            height: 50,
+            height: 60,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: Row(
               children: [
+                const Icon(
+                  Icons.search,
+                  size: 27,
+                ),
                 Container(
                   height: 50,
                   width: 300,
@@ -36,41 +37,11 @@ class _SearchItemState extends State<SearchItem> {
                         border: InputBorder.none, hintText: "Search Here"),
                   ),
                 ),
-                const Spacer(),
-                Icon(
-                  Icons.search,
-                  size: 27,
-                ),
               ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 15),
-            child: const Text(
-              "Categories",
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple),
-            ),
-          ),
-          //categories
-          Categories(),
-
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: const Text(
-              "Best Selling",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple),
             ),
           ),
 
           //Items wiedget
-          ItemsWidget(),
         ],
       ),
     );

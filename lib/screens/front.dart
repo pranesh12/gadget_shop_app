@@ -15,8 +15,22 @@ class _FrontState extends State<Front> {
     return Scaffold(
         body: ListView(
       children: [
-        const HomeAppBar(),
-        const SearchItem(),
+        // const HomeAppBar(),
+
+        // const SearchItem(),
+        Container(
+          height: 500,
+          color: Color.fromARGB(255, 75, 105, 255),
+          child: const Column(
+            children: [
+              HomeAppBar(),
+              const SizedBox(
+                height: 10,
+              ),
+              SearchItem()
+            ],
+          ),
+        )
       ],
     ));
   }
