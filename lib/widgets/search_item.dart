@@ -15,7 +15,7 @@ class _SearchItemState extends State<SearchItem> {
     return Container(
       padding: const EdgeInsets.only(top: 15),
       decoration: const BoxDecoration(
-          color: Color.fromARGB(136, 226, 215, 215),
+          color: Color.fromARGB(136, 245, 245, 245),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15), topRight: Radius.circular(15))),
       child: Column(
