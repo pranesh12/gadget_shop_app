@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -20,7 +21,7 @@ class _CartScreenState extends State<CartScreen> {
           child: Column(
             children: [
               //box or car
-              for (int i = 1; i < 5; i++)
+              for (int i = 1; i < 8; i++)
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -40,7 +41,7 @@ class _CartScreenState extends State<CartScreen> {
                             borderRadius: BorderRadius.circular(20),
                             color: Color.fromARGB(181, 212, 209, 209)),
                         child: Image.asset(
-                          "assets/images/$i.png",
+                          "assets/images/1.png",
                           height: 60,
                           width: 60,
                         ),
@@ -52,18 +53,44 @@ class _CartScreenState extends State<CartScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Brand Name"),
-                            const Text("Product Name Like Samsung"),
+                            Container(
+                              child: const Row(
+                                children: [
+                                  Text("K20 pro"),
+                                  const SizedBox(width: 10),
+                                  badges.Badge(
+                                    badgeStyle: badges.BadgeStyle(
+                                      shape: badges.BadgeShape.twitter,
+                                      badgeColor: Colors
+                                          .blue, // Blue background for the tick
+                                    ),
+                                    badgeContent: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Text(
+                              "Product Name Like Samsung",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700),
+                            ),
                             Container(
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   CircleAvatar(
-                                    backgroundColor: Colors.green,
+                                    radius: 15,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 209, 209, 209),
                                     child: IconButton(
+                                      iconSize: 15,
                                       onPressed: () {},
-                                      icon: const Icon(Icons.add),
+                                      icon: const Icon(Icons.remove),
                                       color: Colors.white,
                                     ),
                                   ),
@@ -74,13 +101,15 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   const SizedBox(width: 20),
                                   CircleAvatar(
-                                    backgroundColor: Colors.red,
+                                    radius: 15,
+                                    backgroundColor: Colors.blue,
                                     child: IconButton(
+                                      iconSize: 15,
                                       onPressed: () {},
-                                      icon: const Icon(Icons.remove),
+                                      icon: const Icon(Icons.add),
                                       color: Colors.white,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -94,10 +123,27 @@ class _CartScreenState extends State<CartScreen> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                      )
+                      ),
                     ],
                   ),
-                )
+                ),
+
+              //Checkout
+
+              Container(
+                width: 500,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text(
+                  "Checkout \$2674",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
             ],
           ),
         ),

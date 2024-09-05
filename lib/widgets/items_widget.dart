@@ -11,17 +11,16 @@ class _ItemsWidgetState extends State<ItemsWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      childAspectRatio: 0.68,
+      childAspectRatio: 0.60,
       mainAxisSpacing: 10,
       crossAxisSpacing: 10,
       shrinkWrap: true,
       padding: const EdgeInsets.all(20),
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       children: [
-        for (int i = 1; i < 8; i++)
+        for (int i = 1; i <= 4; i++)
           Container(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -29,90 +28,46 @@ class _ItemsWidgetState extends State<ItemsWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  child: Stack(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
+                      Positioned(
+                          child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        height: 180,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromARGB(255, 24, 46, 241),
+                            color: Color.fromARGB(255, 246, 246, 246),
+                            borderRadius: BorderRadius.circular(20)),
+                      )),
+                      //iamge
+                      Positioned(child: Image.asset("assets/images/$i.png")),
+                      Positioned(
+                          child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: const Color.fromARGB(240, 247, 225, 114),
+                              ),
+                              child: const Text(
+                                "-50%",
+                              ),
+                            ),
+                            const Icon(
+                              Icons.favorite_border,
+                              color: Colors.black,
+                            ),
+                          ],
                         ),
-                        child: const Text(
-                          "-50%",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      ),
+                      ))
                     ],
                   ),
                 ),
-                // Expanded used for dynamic height based on image size
-                Expanded(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      child: Image.asset(
-                        "assets/images/1.png",
-
-                        height: 120, // Image height can remain fixed
-                        width: 120, // Adjusts the image to fit within the space
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                    child: Text(
-                      "Product Title",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.purple,
-                        fontSize: 16, // Reduced font size to avoid overflow
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Write f of the product here. Here It goes is it right.Here it goes",
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          "\$55",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Icon(
-                          Icons.shopping_cart_checkout_outlined,
-                          color: Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
               ],
             ),
           ),
