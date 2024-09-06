@@ -36,7 +36,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       height: 180,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 246, 246, 246),
+                          color: const Color.fromARGB(255, 246, 246, 246),
                           borderRadius: BorderRadius.circular(20)),
                     )),
                     //iamge

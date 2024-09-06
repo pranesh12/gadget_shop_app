@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/widgets/category_list.dart';
 import 'package:gadget_shop/widgets/home_appBar.dart';
+import 'package:gadget_shop/widgets/items_widget.dart';
 import 'package:gadget_shop/widgets/search_item.dart';
 
 class Front extends StatefulWidget {
@@ -20,14 +22,32 @@ class _FrontState extends State<Front> {
         // const SearchItem(),
         Container(
           height: 500,
-          color: Color.fromARGB(255, 75, 105, 255),
-          child: const Column(
+          color: const Color.fromARGB(255, 75, 105, 255),
+          child: Column(
             children: [
               HomeAppBar(),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              SearchItem()
+              SearchItem(),
+              SizedBox(
+                height: 14,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 12),
+                child: Text(
+                  "Categories",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              CategoryList()
             ],
           ),
         )
