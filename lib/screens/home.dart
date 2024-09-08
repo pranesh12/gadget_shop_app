@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/front.dart';
+import 'package:gadget_shop/screens/login.dart';
 import 'package:gadget_shop/screens/order_review.dart';
+import 'package:gadget_shop/screens/register.dart';
 import 'package:gadget_shop/screens/store.dart';
 
 class Home extends StatefulWidget {
@@ -16,9 +18,7 @@ class _HomeState extends State<Home> {
   final List<Widget> screens = [
     const Front(),
     const Store(),
-    const Center(
-      child: Text("Hello3"),
-    ),
+    const Login(),
     const OrderReview()
   ];
 
