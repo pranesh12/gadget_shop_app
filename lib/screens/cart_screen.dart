@@ -24,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
               for (int i = 1; i < 8; i++)
                 Container(
                   margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   height: 110,
@@ -39,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(181, 212, 209, 209)),
+                            color: Color.fromARGB(181, 246, 246, 246)),
                         child: Image.asset(
                           "assets/images/1.png",
                           height: 60,

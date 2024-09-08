@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 
-class ItemsWidget extends StatefulWidget {
-  const ItemsWidget({super.key});
+class ProductCard extends StatefulWidget {
+  const ProductCard({super.key});
 
   @override
-  _ItemsWidgetState createState() => _ItemsWidgetState();
+  _ProductCardState createState() => _ProductCardState();
 }
 
-class _ItemsWidgetState extends State<ItemsWidget> {
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      childAspectRatio: 0.55,
+      childAspectRatio: 0.56,
       mainAxisSpacing: 10,
       crossAxisSpacing: 10,
       shrinkWrap: true,
@@ -21,10 +21,11 @@ class _ItemsWidgetState extends State<ItemsWidget> {
       crossAxisCount: 2,
       children: [
         for (int i = 1; i <= 4; i++)
+          //card start here
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

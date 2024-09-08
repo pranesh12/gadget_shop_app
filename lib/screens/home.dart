@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/front.dart';
+import 'package:gadget_shop/screens/order_review.dart';
 import 'package:gadget_shop/screens/store.dart';
 
 class Home extends StatefulWidget {
@@ -15,9 +16,10 @@ class _HomeState extends State<Home> {
   final List<Widget> screens = [
     const Front(),
     const Store(),
-    Center(
+    const Center(
       child: Text("Hello3"),
     ),
+    const OrderReview()
   ];
 
   void _onTap(int idx) {
@@ -35,10 +37,11 @@ class _HomeState extends State<Home> {
           Icon(Icons.home),
           Icon(Icons.business),
           Icon(Icons.school),
-          // BottomNavigationBarItem(icon: Icon(Icons.school), label: "Profile"),
+          Icon(Icons.abc_sharp),
         ],
         index: selectedIdx,
         onTap: _onTap,
+        // Optionally, you can customize the CurvedNavigationBar with other properties
       ),
     );
   }
