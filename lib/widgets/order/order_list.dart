@@ -14,7 +14,7 @@ class _OrderListState extends State<OrderList> {
     return Column(
       children: [
         //box or card
-        for (int i = 1; i < 3; i++)
+        for (int i = 1; i < 5; i++)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
             height: 110,

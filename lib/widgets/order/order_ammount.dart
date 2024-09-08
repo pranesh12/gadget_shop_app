@@ -6,7 +6,6 @@ class OrderAmmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
