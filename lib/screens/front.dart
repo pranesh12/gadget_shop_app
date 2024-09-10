@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/widgets/carousel.dart';
 import 'package:gadget_shop/widgets/category_list.dart';
 import 'package:gadget_shop/widgets/home_appBar.dart';
 import 'package:gadget_shop/widgets/product/product_card.dart';
@@ -52,7 +53,15 @@ class _FrontState extends State<Front> {
             ),
           ),
         ),
-        ProductCard()
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(10), topStart: Radius.circular(10))),
+          child: Column(
+            children: [Carousel(), ProductCard()],
+          ),
+        ),
       ],
     ));
   }
