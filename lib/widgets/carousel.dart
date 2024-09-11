@@ -36,18 +36,17 @@ class _CarouselState extends State<Carousel> {
             ),
           ),
         ),
-        const SizedBox(
-            height: 16), // Spacing between the PageView and the indicator
+        const SizedBox(height: 16),
         SmoothPageIndicator(
           controller: _controller, // PageController
           count: 3, // Number of pages
           effect: const ExpandingDotsEffect(
-            activeDotColor: Colors.blue, // Color of the active dot
-            dotColor: Colors.grey, // Color of inactive dots
+            activeDotColor: Colors.blue,
+            dotColor: Colors.grey,
             dotHeight: 8,
             dotWidth: 8,
-            expansionFactor: 3, // How much the active dot expands
-            spacing: 4, // Space between dots
+            expansionFactor: 3,
+            spacing: 4,
           ),
         ),
       ],
@@ -56,7 +55,7 @@ class _CarouselState extends State<Carousel> {
 
   @override
   void dispose() {
-    _controller.dispose(); // Don't forget to dispose the controller
+    _controller.dispose();
     super.dispose();
   }
 }
