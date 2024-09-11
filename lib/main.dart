@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/screens/home.dart';
+import 'package:gadget_shop/screens/onboarding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gadget Shop',
+      title: 'Onboarding Screen',
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const Home(),
+      home: const Onboarding(),
     );
   }
 }

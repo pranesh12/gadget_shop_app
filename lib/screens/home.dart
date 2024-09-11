@@ -32,18 +32,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[selectedIdx],
-      bottomNavigationBar: CurvedNavigationBar(
-        items: const [
-          Icon(Icons.home),
-          Icon(Icons.business),
-          Icon(Icons.school),
-          Icon(Icons.abc_sharp),
-        ],
-        index: selectedIdx,
-        onTap: _onTap,
-        // Optionally, you can customize the CurvedNavigationBar with other properties
+    return MaterialApp(
+      title: "Gadget Shop",
+      home: Scaffold(
+        body: screens[selectedIdx],
+        bottomNavigationBar: CurvedNavigationBar(
+          items: const [
+            Icon(Icons.home),
+            Icon(Icons.business),
+            Icon(Icons.school),
+            Icon(Icons.abc_sharp),
+          ],
+          index: selectedIdx,
+          onTap: _onTap,
+          // Optionally, you can customize the CurvedNavigationBar with other properties
+        ),
       ),
     );
   }

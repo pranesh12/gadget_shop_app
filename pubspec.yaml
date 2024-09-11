@@ -21,6 +21,7 @@ dependencies:
   badges: ^3.1.2
   curved_navigation_bar: ^1.0.6
   smooth_page_indicator: ^1.2.0+3
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -36,9 +37,16 @@ flutter:
   # Add assets to your project.
   assets:
     - assets/images/
+    - assets/splash/
     # You can add more images or assets here, like the example below:
     # - assets/images/a_dot_ham.jpeg
 
   # You can also define fonts here if needed. Example format is commented below.
   # fonts:
   #
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/splash/1.png
+  android: true
+  ios: true

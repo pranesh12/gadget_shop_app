@@ -115,7 +115,10 @@ class _ProfileState extends State<Profile> {
 Widget _buildSettingOption(IconData icon, String title, String subtitle) {
   return ListTile(
     leading: Icon(icon, color: Colors.blue.shade700),
-    title: Text(title),
+    title: Text(
+      title,
+      style: TextStyle(fontWeight: FontWeight.w500),
+    ),
     subtitle: Text(subtitle),
     onTap: () {
       // Add action on tap if needed
