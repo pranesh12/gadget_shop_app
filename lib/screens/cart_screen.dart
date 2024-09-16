@@ -39,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(181, 246, 246, 246)),
+                            color: const Color.fromARGB(181, 246, 246, 246)),
                         child: Image.asset(
                           "assets/images/1.png",
                           height: 60,
@@ -48,81 +48,72 @@ class _CartScreenState extends State<CartScreen> {
                       ),
 
                       //middle item
-                      Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: const Row(
-                                children: [
-                                  Text("K20 pro"),
-                                  const SizedBox(width: 10),
-                                  badges.Badge(
-                                    badgeStyle: badges.BadgeStyle(
-                                      shape: badges.BadgeShape.twitter,
-                                      badgeColor: Colors
-                                          .blue, // Blue background for the tick
-                                    ),
-                                    badgeContent: Icon(
-                                      Icons.check,
-                                      color: Colors.white,
-                                      size: 12,
-                                    ),
-                                  ),
-                                ],
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Text("K20 pro"),
+                              SizedBox(width: 10),
+                              badges.Badge(
+                                badgeStyle: badges.BadgeStyle(
+                                  shape: badges.BadgeShape.twitter,
+                                  badgeColor: Colors
+                                      .blue, // Blue background for the tick
+                                ),
+                                badgeContent: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 12,
+                                ),
                               ),
-                            ),
-                            const Text(
-                              "Product Name Like Samsung",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w700),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 209, 209, 209),
-                                    child: IconButton(
-                                      iconSize: 15,
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.remove),
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Text(
-                                    "34",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: Colors.blue,
-                                    child: IconButton(
-                                      iconSize: 15,
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.add),
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
+                            ],
+                          ),
+                          const Text(
+                            "Samsung",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w700),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 15,
+                                backgroundColor:
+                                    const Color.fromARGB(255, 209, 209, 209),
+                                child: IconButton(
+                                  iconSize: 15,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.remove),
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            //last iem
-                          ],
-                        ),
+                              const SizedBox(width: 15),
+                              Text(
+                                "34",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const SizedBox(width: 15),
+                              CircleAvatar(
+                                radius: 15,
+                                backgroundColor: Colors.blue,
+                                child: IconButton(
+                                  iconSize: 15,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.add),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          //last iem
+                        ],
                       ),
-                      Container(
-                        child: Text(
-                          "\$646",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
+                      Text(
+                        "\$646",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ],
                   ),

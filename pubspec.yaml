@@ -22,6 +22,7 @@ dependencies:
   curved_navigation_bar: ^1.0.6
   smooth_page_indicator: ^1.2.0+3
   flutter_native_splash: ^2.4.1
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:

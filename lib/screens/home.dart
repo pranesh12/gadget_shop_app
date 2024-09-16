@@ -2,10 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/login.dart';
-import 'package:gadget_shop/screens/order_review.dart';
-import 'package:gadget_shop/screens/product_details.dart';
 import 'package:gadget_shop/screens/profile.dart';
-import 'package:gadget_shop/screens/register.dart';
 import 'package:gadget_shop/screens/store.dart';
 
 class Home extends StatefulWidget {
