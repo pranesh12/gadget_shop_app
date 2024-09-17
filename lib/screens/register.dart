@@ -13,7 +13,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        shadowColor: Colors.white,
+        backgroundColor: Colors.white,
       ),
       body: Container(
         margin:

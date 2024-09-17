@@ -29,14 +29,16 @@ class _SearchItemState extends State<SearchItem> {
                   Icons.search,
                   size: 27,
                 ),
-                Container(
-                  height: 50,
-                  width: 300,
+                const SizedBox(
+                    width: 10), // Add some spacing between icon and input
+                Expanded(
                   child: TextFormField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "Search Here"),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search Here",
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),

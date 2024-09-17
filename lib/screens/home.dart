@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/login.dart';
 import 'package:gadget_shop/screens/profile.dart';
+import 'package:gadget_shop/screens/register.dart';
 import 'package:gadget_shop/screens/store.dart';
 
 class Home extends StatefulWidget {
@@ -18,7 +19,8 @@ class _HomeState extends State<Home> {
     const Front(),
     const Store(),
     const Login(),
-    const Profile()
+    const Profile(),
+    const Login()
   ];
 
   void _onTap(int idx) {
@@ -39,6 +41,7 @@ class _HomeState extends State<Home> {
             Icon(Icons.business),
             Icon(Icons.school),
             Icon(Icons.abc_sharp),
+            Icon(Icons.ac_unit),
           ],
           index: selectedIdx,
           onTap: _onTap,
