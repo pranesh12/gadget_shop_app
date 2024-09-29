@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/models/product.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key});
+  final Product product;
+  const ProductDetails({super.key, required this.product});
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -9,17 +11,13 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   // List of image URLs (you can replace with your actual image paths)
-  final List<String> _imageUrls = [
-    'https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png',
-    'https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png',
-    'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png',
-  ];
 
   // Track the selected image index
   int _selectedImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    var product = widget.product;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,13 +42,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: SizedBox(
                 height: 250,
                 child: Image.network(
-                  _imageUrls[_selectedImageIndex],
+                  product.images[_selectedImageIndex],
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, progess) {
                     if (progess == null) {
                       return child;
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -61,34 +59,37 @@ class _ProductDetailsState extends State<ProductDetails> {
             // Image Thumbnails for Selection
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(_imageUrls.length, (index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedImageIndex = index;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: _selectedImageIndex == index
-                              ? Colors.blue
-                              : Colors.transparent,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(product.images.length, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedImageIndex = index;
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: _selectedImageIndex == index
+                                ? Colors.blue
+                                : Colors.transparent,
+                          ),
+                        ),
+                        child: Image.network(
+                          product.images[index],
+                          width: 60,
+                          height: 60,
                         ),
                       ),
-                      child: Image.network(
-                        _imageUrls[index],
-                        width: 60,
-                        height: 60,
-                      ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
             Padding(
@@ -118,7 +119,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const SizedBox(height: 8),
                   // Product Title
                   Text(
-                    'Nike Air Jordon Shoes',
+                    product.title,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -135,19 +136,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Text('Nike', style: TextStyle(color: Colors.blue)),
                     ],
                   ),
-                  SizedBox(height: 16),
+
+                  const SizedBox(height: 16),
+                  Text(product.description),
+                  const SizedBox(height: 16),
                   // Color Selection
-                  Text('Color'),
-                  Row(
-                    children: [
-                      _buildColorCircle(Colors.orange),
-                      _buildColorCircle(Colors.black),
-                      _buildColorCircle(Colors.brown),
-                    ],
-                  ),
-                  SizedBox(height: 16),
+
+                  const SizedBox(height: 16),
                   // Size Selection
-                  Text('Size'),
+                  const Text('Size'),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       _buildSizeButton(context, 'EU 30'),
@@ -172,7 +170,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Nike Air Jordon Shoes for running. Quality product, Long Lasting',
+                          product.description,
                         ),
                       ),
                     ],
@@ -227,7 +225,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   // Helper widget for size buttons
   Widget _buildSizeButton(BuildContext context, String size) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       child: OutlinedButton(
         onPressed: () {},
         child: Text(size),

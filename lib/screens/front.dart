@@ -85,7 +85,9 @@ class _FrontState extends ConsumerState<Front> {
             child: Column(
               children: [
                 Carousel(),
-                ProductCard(),
+                ProductCard(
+                  products: products,
+                ),
               ],
             ),
           ),

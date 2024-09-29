@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:gadget_shop/models/product.dart';
+import 'package:gadget_shop/screens/product_details.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({super.key});
+  final List<Product> products;
+  const ProductCard({super.key, required this.products});
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -15,145 +18,160 @@ class _ProductCardState extends State<ProductCard> {
       builder: (context, constraints) {
         // Screen width and height
         double screenWidth = MediaQuery.of(context).size.width;
-        double screenHeight = MediaQuery.of(context).size.height;
 
         // Dynamically calculate the number of columns
         int crossAxisCount = screenWidth > 600 ? 3 : 2;
 
-        return GridView.count(
-          childAspectRatio: 0.65,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+        return GridView.builder(
+          itemCount: widget.products.length, // Total number of products
+
           shrinkWrap: true,
           padding: const EdgeInsets.all(10),
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: crossAxisCount, // Dynamic crossAxisCount
-          children: [
-            for (int i = 1; i <= 4; i++)
-              // Card starts here
-              Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      children: [
-                        Positioned(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 4),
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 246, 246, 246),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: 0.65,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10, // Dynamic crossAxisCount
+          ),
+          itemBuilder: (context, index) {
+            Product product = widget.products[index];
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Positioned(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 4),
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 246, 246, 246),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        // Image
-                        Positioned(
-                          child: Image.asset(
-                            "assets/images/$i.png",
+                      ),
+                      // Image
+                      Positioned(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductDetails(
+                                          product: product,
+                                        )));
+                          },
+                          child: Image.network(
+                            product
+                                .thumbnail, // Assuming Product has imagePath property
                             height: 110,
                             fit: BoxFit.contain,
                             width: double.infinity,
                           ),
                         ),
-                        Positioned(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: const Color.fromARGB(
-                                        240, 247, 225, 114),
-                                  ),
-                                  child: const Text("-50%"),
+                      ),
+                      Positioned(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color:
+                                      const Color.fromARGB(240, 247, 225, 114),
                                 ),
-                                const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.black,
-                                ),
-                              ],
+                                child: const Text("-50%"),
+                              ),
+                              const Icon(
+                                Icons.favorite_border,
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // Brand details
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 10, right: 12),
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      product.title, // Assuming Product has title property
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  // Brand name
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 10, right: 12),
+                    child: Row(
+                      children: [
+                        Text(product
+                            .brand), // Assuming Product has brand property
+                        const SizedBox(width: 10),
+                        const badges.Badge(
+                          badgeStyle: badges.BadgeStyle(
+                            shape: badges.BadgeShape.twitter,
+                            badgeColor: Colors.blue,
+                          ),
+                          badgeContent: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Add to cart
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 10, right: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "\$${product.price}", // Assuming Product has price property
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12),
+                            ),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
                             ),
                           ),
                         )
                       ],
                     ),
-                    // Brand details
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 10, right: 12),
-                      child: const Text(
-                        "Green Nike sport Shoe",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    // Brand name
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 10, right: 12),
-                      child: const Row(
-                        children: [
-                          Text("K20 pro"),
-                          SizedBox(width: 10),
-                          badges.Badge(
-                            badgeStyle: badges.BadgeStyle(
-                              shape: badges.BadgeShape.twitter,
-                              badgeColor: Colors.blue,
-                            ),
-                            badgeContent: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Add to cart
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 10, right: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "\$987",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
-          ],
+            );
+          },
         );
       },
     );
