@@ -1,13 +1,20 @@
 import 'package:flutter/foundation.dart'; // For kReleaseMode
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
-import 'package:gadget_shop/screens/onboarding.dart'; // Your existing onboarding screen
+import 'package:flutter/services.dart';
+import 'package:gadget_shop/screens/onboarding.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart'; // Your existing onboarding screen
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(
     DevicePreview(
       enabled: !kReleaseMode, // Only enable in debug mode
-      builder: (context) => const MyApp(), // Wrap your MyApp widget
+      builder: (context) =>
+          const ProviderScope(child: MyApp()), // Wrap your MyApp widget
     ),
   );
 }

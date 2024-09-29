@@ -20,12 +20,8 @@ class _ProductCardState extends State<ProductCard> {
         // Dynamically calculate the number of columns
         int crossAxisCount = screenWidth > 600 ? 3 : 2;
 
-        // Dynamically calculate the child aspect ratio (width / height)
-        double childAspectRatio =
-            (screenWidth / crossAxisCount) / (screenHeight * 0.45);
-
         return GridView.count(
-          childAspectRatio: childAspectRatio,
+          childAspectRatio: 0.65,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           shrinkWrap: true,
@@ -47,7 +43,8 @@ class _ProductCardState extends State<ProductCard> {
                       children: [
                         Positioned(
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 4),
                             height: 120,
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 246, 246, 246),

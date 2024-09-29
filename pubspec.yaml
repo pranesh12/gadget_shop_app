@@ -23,6 +23,11 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   flutter_native_splash: ^2.4.1
   device_preview: ^1.2.0
+  riverpod: ^2.5.1
+  http: ^1.2.2
+  hooks_riverpod: ^2.5.2
+  flutter_hooks: ^0.20.5
+  riverpod_annotation: ^2.3.5
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +35,10 @@ dev_dependencies:
 
   # Lint rules for promoting good coding practices.
   flutter_lints: ^3.0.0
+  riverpod_generator: ^2.4.0
+  build_runner: ^2.4.11
+  custom_lint: ^0.6.4
+  riverpod_lint: ^2.3.10
 
 flutter:
   # Use Material Design icons.
