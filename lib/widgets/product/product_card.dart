@@ -25,7 +25,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
           thumbnail: product.thumbnail,
           brand: product.brand,
           price: product.price);
-      ref.read(cartProvider.notifier).addTocart(cartIem);
+      ref.read(cartProvider.notifier).addToCart(cartIem);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("${product.title} added to cart!"),

@@ -18,9 +18,21 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     final cartItems = ref.watch(cartProvider);
     final cartNotifier = ref.read(cartProvider.notifier);
 
-    // Calculate the total cost
-    // double totalCost =
-    //     cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+    double totalCost =
+        cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+
+    addProduct(Cart cartItem) {
+      cartNotifier.updateQuantity(cartItem.productId, cartItem.quantity + 1);
+    }
+
+    removeProduct(Cart cartItem) {
+      if (cartItem.quantity > 1) {
+        cartNotifier.updateQuantity(cartItem.productId, cartItem.quantity - 1);
+      } else {
+        cartNotifier.removeFromCart(
+            cartItem.productId); // Remove the item if quantity is 1
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +50,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   Cart cartItem = cartItems[index]; // Get the current cart item
+                  int quantity = 1;
 
                   return Container(
                     margin:
@@ -103,18 +116,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                       const Color.fromARGB(255, 209, 209, 209),
                                   child: IconButton(
                                     iconSize: 15,
-                                    onPressed: () {
-                                      // cartNotifier.updateQuantity(
-                                      //     cartItem.productId,
-                                      //     cartItem.quantity - 1);
-                                    },
+                                    onPressed: () => {removeProduct(cartItem)},
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
                                   ),
                                 ),
                                 const SizedBox(width: 15),
                                 Text(
-                                  cartItem.price.toString(),
+                                  cartItem.quantity.toString(),
                                   style: const TextStyle(fontSize: 18),
                                 ),
                                 const SizedBox(width: 15),
@@ -124,11 +133,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                   backgroundColor: Colors.blue,
                                   child: IconButton(
                                     iconSize: 15,
-                                    onPressed: () {
-                                      // cartNotifier.updateQuantity(
-                                      //     cartItem.productId,
-                                      //     cartItem.quantity + 1);
-                                    },
+                                    onPressed: () => addProduct(cartItem),
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
                                   ),
@@ -140,7 +145,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
                         // Product Price
                         Text(
-                          "\$${(cartItem.price).toStringAsFixed(2)}",
+                          "\$${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -162,7 +167,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  "Checkout 123",
+                  "Checkout ${totalCost.toString()}",
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
