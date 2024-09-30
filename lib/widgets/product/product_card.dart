@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:gadget_shop/models/cart.dart';
 import 'package:gadget_shop/models/product.dart';
+import 'package:gadget_shop/providers/cart_provider.dart';
 import 'package:gadget_shop/screens/product_details.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends ConsumerStatefulWidget {
   final List<Product> products;
   const ProductCard({super.key, required this.products});
 
@@ -11,9 +14,25 @@ class ProductCard extends StatefulWidget {
   _ProductCardState createState() => _ProductCardState();
 }
 
-class _ProductCardState extends State<ProductCard> {
+class _ProductCardState extends ConsumerState<ProductCard> {
   @override
   Widget build(BuildContext context) {
+    hadleAddToCart(Product product) {
+      // Add product to the cart using CartNotifier
+      final cartIem = Cart(
+          productId: product.id,
+          title: product.title,
+          thumbnail: product.thumbnail,
+          brand: product.brand,
+          price: product.price);
+      ref.read(cartProvider.notifier).addTocart(cartIem);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${product.title} added to cart!"),
+        ),
+      );
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Screen width and height
@@ -72,7 +91,7 @@ class _ProductCardState extends State<ProductCard> {
                             product
                                 .thumbnail, // Assuming Product has imagePath property
                             height: 110,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                             width: double.infinity,
                           ),
                         ),
@@ -158,7 +177,7 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () => hadleAddToCart(product),
                             icon: const Icon(
                               Icons.add,
                               color: Colors.white,

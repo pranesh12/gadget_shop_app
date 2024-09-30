@@ -29,10 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      // Add DevicePreview support
       builder: DevicePreview.appBuilder,
-      useInheritedMediaQuery:
-          true, // Necessary for device preview to work properly
       home: const Onboarding(),
     );
   }

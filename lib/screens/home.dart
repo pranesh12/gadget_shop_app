@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/screens/cart_screen.dart';
 import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/login.dart';
 import 'package:gadget_shop/screens/profile.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     const Store(),
     const Login(),
     const Profile(),
-    const Login()
+    const CartScreen()
   ];
 
   void _onTap(int idx) {
