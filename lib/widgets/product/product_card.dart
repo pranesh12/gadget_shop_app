@@ -3,6 +3,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:gadget_shop/models/cart.dart';
 import 'package:gadget_shop/models/product.dart';
 import 'package:gadget_shop/providers/cart_provider.dart';
+import 'package:gadget_shop/screens/cart_screen.dart';
 import 'package:gadget_shop/screens/product_details.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -28,7 +29,22 @@ class _ProductCardState extends ConsumerState<ProductCard> {
       ref.read(cartProvider.notifier).addToCart(cartIem);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("${product.title} added to cart!"),
+          content:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("${product.title} added to cart!"),
+            InkWell(
+              child: const Text(
+                "View",
+                style: TextStyle(color: Colors.yellow),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CartScreen()));
+              },
+            )
+          ]),
         ),
       );
     }

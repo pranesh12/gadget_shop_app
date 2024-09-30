@@ -50,106 +50,113 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   Cart cartItem = cartItems[index]; // Get the current cart item
-                  int quantity = 1;
 
-                  return Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    height: 110,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Image and Brand
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                  return Dismissible(
+                    key: ValueKey(cartItem.productId),
+                    onDismissed: (context) {
+                      cartNotifier.removeFromCart(cartItem.productId);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      height: 110,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Image and Brand
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Image.network(
+                              cartItem.thumbnail,
+                              height: 60,
+                              width: 60,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          child: Image.network(
-                            cartItem.thumbnail,
-                            height: 60,
-                            width: 60,
-                            fit: BoxFit.cover,
+
+                          // Product Details
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(cartItem.title), // Product title
+                                  const SizedBox(width: 10),
+                                  const badges.Badge(
+                                    badgeStyle: badges.BadgeStyle(
+                                      shape: badges.BadgeShape.twitter,
+                                      badgeColor: Colors.blue,
+                                    ),
+                                    badgeContent: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                cartItem.brand,
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w700),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Decrease quantity button
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 209, 209, 209),
+                                    child: IconButton(
+                                      iconSize: 15,
+                                      onPressed: () =>
+                                          {removeProduct(cartItem)},
+                                      icon: const Icon(Icons.remove),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Text(
+                                    cartItem.quantity.toString(),
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  // Increase quantity button
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.blue,
+                                    child: IconButton(
+                                      iconSize: 15,
+                                      onPressed: () => addProduct(cartItem),
+                                      icon: const Icon(Icons.add),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
 
-                        // Product Details
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(cartItem.title), // Product title
-                                const SizedBox(width: 10),
-                                const badges.Badge(
-                                  badgeStyle: badges.BadgeStyle(
-                                    shape: badges.BadgeShape.twitter,
-                                    badgeColor: Colors.blue,
-                                  ),
-                                  badgeContent: Icon(
-                                    Icons.check,
-                                    color: Colors.white,
-                                    size: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              cartItem.brand,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w700),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Decrease quantity button
-                                CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 209, 209, 209),
-                                  child: IconButton(
-                                    iconSize: 15,
-                                    onPressed: () => {removeProduct(cartItem)},
-                                    icon: const Icon(Icons.remove),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(width: 15),
-                                Text(
-                                  cartItem.quantity.toString(),
-                                  style: const TextStyle(fontSize: 18),
-                                ),
-                                const SizedBox(width: 15),
-                                // Increase quantity button
-                                CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.blue,
-                                  child: IconButton(
-                                    iconSize: 15,
-                                    onPressed: () => addProduct(cartItem),
-                                    icon: const Icon(Icons.add),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        // Product Price
-                        Text(
-                          "\$${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                      ],
+                          // Product Price
+                          Text(
+                            "\$${(cartItem.price * cartItem.quantity).toStringAsFixed(0)}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -167,7 +174,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  "Checkout ${totalCost.toString()}",
+                  "Checkout ${totalCost.toStringAsFixed(0)}",
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
