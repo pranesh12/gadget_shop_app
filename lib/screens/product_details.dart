@@ -6,10 +6,10 @@ class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key, required this.product});
 
   @override
-  _ProductDetailsState createState() => _ProductDetailsState();
+  ProductDetailsState createState() => ProductDetailsState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class ProductDetailsState extends State<ProductDetails> {
   // List of image URLs (you can replace with your actual image paths)
 
   // Track the selected image index

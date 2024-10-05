@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
     const Front(),
     const Store(),
     const Login(),
-    Register(),
+    const Register(),
     const CartScreen()
   ];
 

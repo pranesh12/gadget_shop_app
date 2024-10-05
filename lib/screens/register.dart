@@ -40,24 +40,18 @@ class _RegisterState extends State<Register> {
         );
 
         print(response.body);
+        if (response.statusCode == 201) {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Account created Succesfully')),
+          );
+        }
       } catch (e) {
-        print(e);
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Something went wrong try Again')),
+        );
       }
-      // All validations passed
-
-      // if (response.statusCode == 201) {
-      //   // Account created successfully
-      //   final responseBody = jsonDecode(response.body);
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //         content: Text('Account created: ${responseBody['message']}')),
-      //   );
-      // } else {
-      //   // Handle error
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Failed to create account: ${response.body}')),
-      //   );
-      // }
     }
   }
 

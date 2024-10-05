@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/models/product.dart';
 import 'package:gadget_shop/providers/product_provider.dart';
+import 'package:gadget_shop/screens/home.dart';
 import 'package:gadget_shop/widgets/carousel.dart';
 import 'package:gadget_shop/widgets/category_list.dart';
 import 'package:gadget_shop/widgets/home_appBar.dart';
@@ -52,14 +53,14 @@ class _FrontState extends ConsumerState<Front> {
             color: const Color.fromARGB(255, 75, 105, 255),
             child: Column(
               children: [
-                HomeAppBar(),
+                const HomeAppBar(),
                 const SizedBox(height: 10),
-                SearchItem(),
+                const SearchItem(),
                 const SizedBox(height: 14),
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(left: 15, top: 10),
-                  child: Text(
+                  child: const Text(
                     "Categories",
                     style: TextStyle(
                       color: Colors.white,
@@ -69,7 +70,7 @@ class _FrontState extends ConsumerState<Front> {
                   ),
                 ),
                 const SizedBox(height: 14),
-                CategoryList(),
+                const CategoryList(),
                 const SizedBox(height: 14),
               ],
             ),
@@ -84,7 +85,7 @@ class _FrontState extends ConsumerState<Front> {
             ),
             child: Column(
               children: [
-                Carousel(),
+                const Carousel(),
                 ProductCard(
                   products: products,
                 ),

@@ -3,13 +3,13 @@ import 'package:gadget_shop/widgets/Order/order_list.dart';
 import 'package:gadget_shop/widgets/order/order_ammount.dart';
 
 class OrderReview extends StatefulWidget {
-  const OrderReview({Key? key}) : super(key: key);
+  const OrderReview({super.key});
 
   @override
-  _OrderReviewState createState() => _OrderReviewState();
+  OrderReviewState createState() => OrderReviewState();
 }
 
-class _OrderReviewState extends State<OrderReview> {
+class OrderReviewState extends State<OrderReview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +23,8 @@ class _OrderReviewState extends State<OrderReview> {
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
             child: Column(
               children: [
-                OrderList(),
-                OrderAmmount(),
+                const OrderList(),
+                const OrderAmmount(),
                 Container(
                     margin: const EdgeInsets.symmetric(vertical: 15),
                     padding: const EdgeInsets.symmetric(horizontal: 5),

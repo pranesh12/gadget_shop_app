@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:gadget_shop/providers/cart_provider.dart';
+import 'package:gadget_shop/screens/checkout.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:gadget_shop/models/cart.dart'; // Make sure you import your Cart model
+import 'package:gadget_shop/models/cart.dart';
+// Make sure you import your Cart model
 
 class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
 
   @override
-  _CartScreenState createState() => _CartScreenState();
+  CartScreenState createState() => CartScreenState();
 }
 
-class _CartScreenState extends ConsumerState<CartScreen> {
+class CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     // Watch the cart provider to get the current state of the cart
@@ -163,19 +165,29 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               ),
 
               // Checkout Button
-              Container(
-                width: 500,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  "Checkout ${totalCost.toStringAsFixed(0)}",
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Checkout(
+                                total: totalCost,
+                              )));
+                },
+                child: Container(
+                  width: 500,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    "Checkout ${totalCost.toStringAsFixed(0)}",
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                 ),
               ),
             ],
