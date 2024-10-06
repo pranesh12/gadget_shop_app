@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -6,11 +7,12 @@ class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
-  _RegisterState createState() => _RegisterState();
+  RegisterState createState() => RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -25,6 +27,9 @@ class _RegisterState extends State<Register> {
 
   Future<void> _signup() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         final response = await http.post(
           url,
@@ -39,20 +44,61 @@ class _RegisterState extends State<Register> {
           }),
         );
 
-        print(response.body);
-        if (response.statusCode == 201) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Account created Succesfully')),
-          );
+        if (response.statusCode == 200) {
+          // Reset the form and show success dialog
+          setState(() {
+            _isLoading = false;
+          });
+          _showSuccessDialog("Account Created Successfully");
+        } else {
+          _showError("Failed to Create account");
         }
       } catch (e) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Something went wrong try Again')),
-        );
+        setState(() {
+          _isLoading = false;
+        });
+
+        _showError("Failed to create account");
       }
     }
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Success",
+            style: TextStyle(color: Colors.green),
+          ),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Navigate to another route (e.g., OrderSummary page)
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const Login(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override
@@ -77,6 +123,7 @@ class _RegisterState extends State<Register> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
+
                 // First Name
                 TextFormField(
                   controller: _firstNameController,
@@ -89,6 +136,8 @@ class _RegisterState extends State<Register> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your first name';
+                    } else if (value.length < 3) {
+                      return "First name should be 3 Character";
                     }
                     return null;
                   },
@@ -107,6 +156,8 @@ class _RegisterState extends State<Register> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your last name';
+                    } else if (value.length < 3) {
+                      return "Last name should have 3 character";
                     }
                     return null;
                   },
@@ -200,12 +251,19 @@ class _RegisterState extends State<Register> {
                     color: Colors.blue,
                   ),
                   child: InkWell(
-                    onTap: _signup, // Trigger the signup function
-                    child: const Center(
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
+                    onTap: _isLoading
+                        ? null
+                        : _signup, // Disable button while loading
+                    child: Center(
+                      child: _isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              "Create Account",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                     ),
                   ),
                 ),

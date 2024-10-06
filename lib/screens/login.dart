@@ -55,8 +55,6 @@ class LoginState extends State<Login> {
           final Map<String, dynamic> userData = responseBody['data'];
 
           User user = User.fromJson(userData);
-          print(user.id);
-          print(user.lastName);
 
           // Store user data in SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,6 +62,7 @@ class LoginState extends State<Login> {
           await prefs.setString('firstName', user.firstName);
           await prefs.setString('lastName', user.lastName);
           await prefs.setString('id', user.id);
+          await prefs.setString('token', user.token);
 
           // Navigate to the front screen
           if (mounted) {
@@ -102,113 +101,118 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Welcome back",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Welcome back",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Discover Limitless Choices and Unmatched Convenience",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 10),
-                // Email
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.mail),
-                    labelText: "Email",
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Discover Limitless Choices and Unmatched Convenience",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  validator: (value) {
-                    if (value == null || !value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                // Password
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: !_isPasswordVisible,
-                  validator: (value) {
-                    if (value == null || value.length < 5) {
-                      return 'Password must be at least 5 characters long';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.lock),
-                    labelText: "Password",
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                  const SizedBox(height: 10),
+                  // Email
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.mail),
+                      labelText: "Email",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || !value.contains('@')) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  // Password
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    validator: (value) {
+                      if (value == null || value.length < 5) {
+                        return 'Password must be at least 5 characters long';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock),
+                      labelText: "Password",
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                // Login button
-                Container(
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.blue,
-                  ),
-                  child: InkWell(
-                    onTap: _login,
-                    child: const Center(
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // Navigate to register screen
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Register()),
-                    );
-                  },
-                  child: Container(
+                  const SizedBox(height: 20),
+                  // Login button
+                  Container(
                     height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.blue,
                     ),
-                    child: const Center(
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(fontSize: 20),
+                    child: InkWell(
+                      onTap: _login,
+                      child: const Center(
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
-                )
-              ],
+                  const SizedBox(height: 20),
+                  // Navigate to register screen
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Register()),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Create Account",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

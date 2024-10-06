@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/constants/api_endpoint.dart';
 import 'package:gadget_shop/providers/cart_provider.dart';
+import 'package:gadget_shop/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +25,9 @@ class CheckoutState extends ConsumerState<Checkout> {
   String firstName = "";
   String lastName = "";
   String userId = "";
+  String token = "";
+  bool isLoading = false; // Loading state
+
   int cartItemCount = 0;
   late SharedPreferences prefs;
   @override
@@ -37,11 +41,13 @@ class CheckoutState extends ConsumerState<Checkout> {
     String? storedFirstName = prefs.getString('firstName');
     String? storedLastName = prefs.getString('lastName');
     String? storedid = prefs.getString('id');
+    String? storedToken = prefs.getString('token');
 
     setState(() {
       firstName = storedFirstName ?? "";
       lastName = storedLastName ?? "";
       userId = storedid ?? "";
+      token = storedToken ?? "";
     });
   }
 
@@ -49,32 +55,105 @@ class CheckoutState extends ConsumerState<Checkout> {
 
   Future<void> _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
-      // Process the form if validation is successful
+      final total = widget.total;
+
+      // Show loading spinner
+      setState(() {
+        isLoading = true;
+      });
+
       final orderData = {
         'user': userId,
-        'name': firstName + lastName,
+        'name': '$firstName $lastName',
         'email': _email.text,
         'address': _address.text,
         'phone': _phone.text,
+        'totalAmount': total,
         'cart': cart,
       };
-
-      print(orderData);
 
       try {
         final res = await http.post(
           url,
           headers: <String, String>{
             'Content-type': 'application/json',
+            'Authorization': 'Bearer $token',
           },
-          // body: jsonEncode(),
+          body: jsonEncode(orderData),
         );
 
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   const SnackBar(content: Text('Processing Checkout')),
-        // );
-      } catch (e) {}
+        // Hide loading spinner
+        setState(() {
+          isLoading = false;
+        });
+
+        if (res.statusCode == 200) {
+          // Show success dialog
+          _showSuccessDialog();
+        } else {
+          // Show failure dialog
+          _showFailureDialog();
+        }
+      } catch (e) {
+        // Hide loading spinner and show failure dialog in case of an error
+        setState(() {
+          isLoading = false;
+        });
+        _showFailureDialog();
+      }
     }
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Success"),
+          content: const Text("Order successfully created."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Clear form fields
+                _address.clear();
+                _phone.clear();
+                _email.clear();
+
+                Navigator.of(context).pop(); // Close the dialog
+
+                // Navigate to another route (e.g., OrderSummary page)
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const Front(),
+                  ),
+                );
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showFailureDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: const Text("Failed to create the order. Please try again."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -85,99 +164,107 @@ class CheckoutState extends ConsumerState<Checkout> {
         .map((item) => {'productId': item.productId, 'quantity': item.quantity})
         .toList();
 
-    print(cart);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Checkout"),
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Address field
-                TextFormField(
-                  controller: _address,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                    labelText: "Address",
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.location_on),
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Address field
+                  TextFormField(
+                    controller: _address,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      labelText: "Address",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.location_on),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your address';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your address';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Phone number field with Bangladeshi phone number validation
-                TextFormField(
-                  controller: _phone,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: "Phone",
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.phone),
+                  // Phone number field with Bangladeshi phone number validation
+                  TextFormField(
+                    controller: _phone,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      labelText: "Phone",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.phone),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your phone number';
+                      } else if (!RegExp(r'^(?:\+88|88)?01[3-9]\d{8}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid Bangladeshi phone number';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    } else if (!RegExp(r'^(?:\+88|88)?01[3-9]\d{8}$')
-                        .hasMatch(value)) {
-                      return 'Please enter a valid Bangladeshi phone number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Email field
-                TextFormField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: "Email",
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                  // Email field
+                  TextFormField(
+                    controller: _email,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: "Email",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!RegExp(
+                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    } else if (!RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Submit button
-                Container(
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.blue,
-                  ),
-                  child: InkWell(
-                    onTap: _handleSubmit, // Trigger the signup function
-                    child: const Center(
-                      child: Text(
-                        "Confirm Order",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                  // Submit button with a spinner
+                  Container(
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.blue,
+                    ),
+                    child: InkWell(
+                      onTap: isLoading
+                          ? null
+                          : _handleSubmit, // Disable button while loading
+                      child: Center(
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Confirm Order",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
