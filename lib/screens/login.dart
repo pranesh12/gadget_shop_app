@@ -55,6 +55,8 @@ class LoginState extends State<Login> {
           final Map<String, dynamic> userData = responseBody['data'];
 
           User user = User.fromJson(userData);
+          print(user.id);
+          print(user.lastName);
 
           // Store user data in SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();

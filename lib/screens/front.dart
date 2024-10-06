@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/constants/api_endpoint.dart';
 import 'package:gadget_shop/models/product.dart';
 import 'package:gadget_shop/providers/product_provider.dart';
 import 'package:gadget_shop/screens/home.dart';
@@ -15,10 +16,10 @@ class Front extends ConsumerStatefulWidget {
   const Front({super.key});
 
   @override
-  _FrontState createState() => _FrontState();
+  FrontState createState() => FrontState();
 }
 
-class _FrontState extends ConsumerState<Front> {
+class FrontState extends ConsumerState<Front> {
   @override
   void initState() {
     super.initState();
@@ -26,8 +27,8 @@ class _FrontState extends ConsumerState<Front> {
   }
 
   Future<void> fetchProducts() async {
-    final response = await http.get(Uri.parse(
-        'https://shoes-shop-backend-owsg.vercel.app/api/v1/product/all'));
+    final response =
+        await http.get(Uri.parse('${ApiEndpoint.baseUrl}/product/all'));
 
     if (response.statusCode == 200) {
       List<Product> products = (jsonDecode(response.body)['data'] as List)
