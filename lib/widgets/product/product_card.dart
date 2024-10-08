@@ -12,43 +12,12 @@ class ProductCard extends ConsumerStatefulWidget {
   const ProductCard({super.key, required this.products});
 
   @override
-  _ProductCardState createState() => _ProductCardState();
+  ProductCardState createState() => ProductCardState();
 }
 
-class _ProductCardState extends ConsumerState<ProductCard> {
+class ProductCardState extends ConsumerState<ProductCard> {
   @override
   Widget build(BuildContext context) {
-    hadleAddToCart(Product product) {
-      // Add product to the cart using CartNotifier
-      final cartIem = Cart(
-          productId: product.id,
-          title: product.title,
-          thumbnail: product.thumbnail,
-          brand: product.brand,
-          price: product.price);
-      ref.read(cartProvider.notifier).addToCart(cartIem);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("${product.title} added to cart!"),
-            InkWell(
-              child: const Text(
-                "View",
-                style: TextStyle(color: Colors.yellow),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CartScreen()));
-              },
-            )
-          ]),
-        ),
-      );
-    }
-
     return LayoutBuilder(
       builder: (context, constraints) {
         // Screen width and height
@@ -65,7 +34,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
-            childAspectRatio: 0.65,
+            childAspectRatio: 0.80,
             mainAxisSpacing: 10,
             crossAxisSpacing: 10, // Dynamic crossAxisCount
           ),
@@ -153,55 +122,36 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                   Container(
                     padding:
                         const EdgeInsets.only(top: 10, left: 10, right: 12),
-                    child: Row(
-                      children: [
-                        Text(product
-                            .brand), // Assuming Product has brand property
-                        const SizedBox(width: 10),
-                        const badges.Badge(
-                          badgeStyle: badges.BadgeStyle(
-                            shape: badges.BadgeShape.twitter,
-                            badgeColor: Colors.blue,
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(product
+                                  .brand), // Assuming Product has brand property
+                              const SizedBox(width: 5),
+                              const badges.Badge(
+                                badgeStyle: badges.BadgeStyle(
+                                  shape: badges.BadgeShape.twitter,
+                                  badgeColor: Colors.blue,
+                                ),
+                                badgeContent: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
                           ),
-                          badgeContent: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 12,
+                          Text(
+                            '\$${product.price.toString()}',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Add to cart
-                  Container(
-                    padding:
-                        const EdgeInsets.only(top: 10, left: 10, right: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "\$${product.price}", // Assuming Product has price property
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
-                            ),
-                          ),
-                          child: IconButton(
-                            onPressed: () => hadleAddToCart(product),
-                            icon: const Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                        ],
+                      ),
+                    ]),
                   ),
                 ],
               ),

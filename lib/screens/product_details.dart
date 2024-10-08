@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/models/cart.dart';
 import 'package:gadget_shop/models/product.dart';
+import 'package:gadget_shop/providers/cart_provider.dart';
+import 'package:gadget_shop/screens/cart_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductDetails extends StatefulWidget {
+class ProductDetails extends ConsumerStatefulWidget {
   final Product product;
   const ProductDetails({super.key, required this.product});
 
@@ -9,7 +13,7 @@ class ProductDetails extends StatefulWidget {
   ProductDetailsState createState() => ProductDetailsState();
 }
 
-class ProductDetailsState extends State<ProductDetails> {
+class ProductDetailsState extends ConsumerState<ProductDetails> {
   // List of image URLs (you can replace with your actual image paths)
 
   // Track the selected image index
@@ -18,6 +22,37 @@ class ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     var product = widget.product;
+    hadleAddToCart() {
+      // Add product to the cart using CartNotifier
+      final cartIem = Cart(
+          productId: product.id,
+          title: product.title,
+          thumbnail: product.thumbnail,
+          brand: product.brand,
+          price: product.price);
+      ref.read(cartProvider.notifier).addToCart(cartIem);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("${product.title} added to cart!"),
+            InkWell(
+              child: const Text(
+                "View",
+                style: TextStyle(color: Color.fromARGB(255, 72, 59, 255)),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CartScreen()));
+              },
+            )
+          ]),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -120,14 +155,14 @@ class ProductDetailsState extends State<ProductDetails> {
                   // Product Title
                   Text(
                     product.title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   // Stock Status and Brand
-                  Row(
+                  const Row(
                     children: [
                       Text('Stock: ',
                           style: TextStyle(fontWeight: FontWeight.bold)),
@@ -153,19 +188,13 @@ class ProductDetailsState extends State<ProductDetails> {
                       _buildSizeButton(context, 'EU 34'),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Checkout Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Checkout'),
-                    ),
-                  ),
+
                   const SizedBox(height: 16),
                   // Description
                   ExpansionTile(
-                    title: Text('Description'),
+                    title: const Text('Description'),
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -176,11 +205,11 @@ class ProductDetailsState extends State<ProductDetails> {
                     ],
                   ),
                   // Reviews
-                  ExpansionTile(
+                  const ExpansionTile(
                     title: Text('Reviews (199)'),
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Text('User reviews will be displayed here.'),
                       ),
                     ],
@@ -195,13 +224,21 @@ class ProductDetailsState extends State<ProductDetails> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              icon: Icon(Icons.add_shopping_cart),
-              onPressed: () {},
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                );
+              },
+              child: const Text(
+                'View Cart',
+                style: TextStyle(color: Color.fromARGB(248, 5, 29, 245)),
+              ),
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: Text('Add to Bag'),
+              onPressed: hadleAddToCart,
+              child: const Text('Add to Cart'),
             ),
           ],
         ),
@@ -210,17 +247,6 @@ class ProductDetailsState extends State<ProductDetails> {
   }
 
   // Helper widget for color circles
-  Widget _buildColorCircle(Color color) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      height: 36,
-      width: 36,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
 
   // Helper widget for size buttons
   Widget _buildSizeButton(BuildContext context, String size) {
