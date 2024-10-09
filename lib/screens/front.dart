@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gadget_shop/constants/api_endpoint.dart';
 import 'package:gadget_shop/models/product.dart';
 import 'package:gadget_shop/providers/product_provider.dart';
-import 'package:gadget_shop/screens/home.dart';
+import 'package:gadget_shop/screens/search_screen.dart';
 import 'package:gadget_shop/widgets/carousel.dart';
 import 'package:gadget_shop/widgets/category_list.dart';
 import 'package:gadget_shop/widgets/home_appBar.dart';
@@ -56,7 +56,15 @@ class FrontState extends ConsumerState<Front> {
               children: [
                 const HomeAppBar(),
                 const SizedBox(height: 10),
-                const SearchItem(),
+                InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchScreen()),
+                      );
+                    },
+                    child: const SearchItem()),
                 const SizedBox(height: 14),
                 Container(
                   alignment: Alignment.centerLeft,

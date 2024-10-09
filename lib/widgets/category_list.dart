@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatefulWidget {
-  const CategoryList({Key? key}) : super(key: key);
+  const CategoryList({super.key});
 
   @override
-  _CategoryListState createState() => _CategoryListState();
+  CategoryListState createState() => CategoryListState();
 }
 
-class _CategoryListState extends State<CategoryList> {
+class CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,7 +41,7 @@ class _CategoryListState extends State<CategoryList> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "Android",
                     style: TextStyle(color: Colors.white),
                     overflow: TextOverflow.ellipsis,

@@ -10,6 +10,13 @@ class ProductNotifier extends StateNotifier<List<Product>> {
     state = products;
   }
 
+  List<Product> searchProducts(String query) {
+    return state
+        .where((product) =>
+            product.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+
   // Add more methods to modify the state (e.g., filter, add, remove products)
 }
 

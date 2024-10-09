@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:gadget_shop/models/cart.dart';
 import 'package:gadget_shop/models/product.dart';
-import 'package:gadget_shop/providers/cart_provider.dart';
-import 'package:gadget_shop/screens/cart_screen.dart';
 import 'package:gadget_shop/screens/product_details.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -28,7 +25,6 @@ class ProductCardState extends ConsumerState<ProductCard> {
 
         return GridView.builder(
           itemCount: widget.products.length, // Total number of products
-
           shrinkWrap: true,
           padding: const EdgeInsets.all(10),
           physics: const NeverScrollableScrollPhysics(),
@@ -81,30 +77,6 @@ class ProductCardState extends ConsumerState<ProductCard> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color:
-                                      const Color.fromARGB(240, 247, 225, 114),
-                                ),
-                                child: const Text("-50%"),
-                              ),
-                              const Icon(
-                                Icons.favorite_border,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                   // Brand details

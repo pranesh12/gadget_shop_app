@@ -267,6 +267,31 @@ class RegisterState extends State<Register> {
                     ),
                   ),
                 ),
+
+                const SizedBox(
+                  height: 12,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Login()),
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "Sign in",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

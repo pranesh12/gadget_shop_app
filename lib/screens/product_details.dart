@@ -14,22 +14,32 @@ class ProductDetails extends ConsumerStatefulWidget {
 }
 
 class ProductDetailsState extends ConsumerState<ProductDetails> {
-  // List of image URLs (you can replace with your actual image paths)
-
-  // Track the selected image index
   int _selectedImageIndex = 0;
+  String? _selectedSize; // Track the selected size
 
   @override
   Widget build(BuildContext context) {
     var product = widget.product;
     hadleAddToCart() {
+      if (_selectedSize == null) {
+        // Show a warning if no size is selected
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please select a size!"),
+          ),
+        );
+        return;
+      }
+
       // Add product to the cart using CartNotifier
       final cartIem = Cart(
-          productId: product.id,
-          title: product.title,
-          thumbnail: product.thumbnail,
-          brand: product.brand,
-          price: product.price);
+        productId: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        brand: product.brand,
+        price: product.price,
+        // Include the selected size
+      );
       ref.read(cartProvider.notifier).addToCart(cartIem);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -72,7 +82,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Main Image Display
             Center(
               child: SizedBox(
                 height: 250,
@@ -91,7 +100,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
                 ),
               ),
             ),
-            // Image Thumbnails for Selection
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
@@ -132,7 +140,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Rating and Price
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -152,7 +159,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  // Product Title
                   Text(
                     product.title,
                     style: const TextStyle(
@@ -161,7 +167,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  // Stock Status and Brand
                   const Row(
                     children: [
                       Text('Stock: ',
@@ -171,28 +176,24 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
                       Text('Nike', style: TextStyle(color: Colors.blue)),
                     ],
                   ),
-
                   const SizedBox(height: 16),
                   Text(product.description),
                   const SizedBox(height: 16),
-                  // Color Selection
-
-                  const SizedBox(height: 16),
-                  // Size Selection
                   const Text('Size'),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      _buildSizeButton(context, 'EU 30'),
-                      _buildSizeButton(context, 'EU 32'),
-                      _buildSizeButton(context, 'EU 34'),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _buildSizeButton(context, '39'),
+                        _buildSizeButton(context, '40'),
+                        _buildSizeButton(context, '41'),
+                        _buildSizeButton(context, '42'),
+                        _buildSizeButton(context, '43'),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  // Checkout Button
-
-                  const SizedBox(height: 16),
-                  // Description
                   ExpansionTile(
                     title: const Text('Description'),
                     children: [
@@ -204,7 +205,6 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
                       ),
                     ],
                   ),
-                  // Reviews
                   const ExpansionTile(
                     title: Text('Reviews (199)'),
                     children: [
@@ -246,15 +246,21 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
     );
   }
 
-  // Helper widget for color circles
-
-  // Helper widget for size buttons
   Widget _buildSizeButton(BuildContext context, String size) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       child: OutlinedButton(
-        onPressed: () {},
-        child: Text(size),
+        onPressed: () {
+          setState(() {
+            _selectedSize = size; // Update selected size
+          });
+        },
+        child: Text(
+          size,
+          style: TextStyle(
+            color: _selectedSize == size ? Colors.blue : Colors.black,
+          ),
+        ),
       ),
     );
   }

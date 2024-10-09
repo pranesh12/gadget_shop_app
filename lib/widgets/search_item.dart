@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gadget_shop/screens/search_screen.dart';
 
 class SearchItem extends StatefulWidget {
   const SearchItem({super.key});
@@ -32,13 +33,26 @@ class SearchItemState extends State<SearchItem> {
                 const SizedBox(
                     width: 10), // Add some spacing between icon and input
                 Expanded(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search Here",
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ),
+                      );
+                    },
+                    child: AbsorbPointer(
+                      // AbsorbPointer prevents the keyboard from showing up
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Search Here",
+                        ),
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
