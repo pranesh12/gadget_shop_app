@@ -4,10 +4,10 @@ class Store extends StatefulWidget {
   const Store({super.key});
 
   @override
-  _StoreState createState() => _StoreState();
+  StoreState createState() => StoreState();
 }
 
-class _StoreState extends State<Store> {
+class StoreState extends State<Store> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/cart_screen.dart';
 import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/login.dart';
+import 'package:gadget_shop/screens/profile.dart';
 import 'package:gadget_shop/screens/register.dart';
 import 'package:gadget_shop/screens/store.dart';
 
@@ -20,7 +21,7 @@ class HomeState extends State<Home> {
     const Store(),
     const Login(),
     const Register(),
-    const CartScreen()
+    const Profile(),
   ];
 
   void _onTap(int idx) {
@@ -41,7 +42,7 @@ class HomeState extends State<Home> {
             Icon(Icons.business),
             Icon(Icons.school),
             Icon(Icons.abc_sharp),
-            Icon(Icons.ac_unit),
+            Icon(Icons.person),
           ],
           index: selectedIdx,
           onTap: _onTap,

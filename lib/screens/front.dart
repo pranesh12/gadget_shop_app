@@ -6,7 +6,7 @@ import 'package:gadget_shop/providers/product_provider.dart';
 import 'package:gadget_shop/screens/search_screen.dart';
 import 'package:gadget_shop/widgets/carousel.dart';
 import 'package:gadget_shop/widgets/category_list.dart';
-import 'package:gadget_shop/widgets/home_appBar.dart';
+import 'package:gadget_shop/widgets/home_appbar.dart';
 import 'package:gadget_shop/widgets/product/product_card.dart';
 import 'package:gadget_shop/widgets/search_item.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

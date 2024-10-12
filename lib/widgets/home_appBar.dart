@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:gadget_shop/screens/cart_screen.dart';
+import 'package:gadget_shop/screens/login.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeAppBar extends StatefulWidget {
+class HomeAppBar extends ConsumerStatefulWidget {
   const HomeAppBar({super.key});
 
   @override
   HomeAppBarState createState() => HomeAppBarState();
 }
 
-class HomeAppBarState extends State<HomeAppBar> {
+class HomeAppBarState extends ConsumerState<HomeAppBar> {
   late SharedPreferences prefs;
   String firstName = "";
   String lastName = "";
-  int cartItemCount = 0;
 
   @override
   void initState() {
@@ -47,10 +47,15 @@ class HomeAppBarState extends State<HomeAppBar> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Hello $firstName $lastName, Welcome to",
-                    style: const TextStyle(color: Colors.white),
-                  ),
+                  firstName.isEmpty
+                      ? const Text(
+                          "Hello  Welcome to",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : Text(
+                          "Hello $firstName $lastName, Welcome to",
+                          style: const TextStyle(color: Colors.white),
+                        ),
                   const Text(
                     "Kick Street",
                     style: TextStyle(
@@ -61,24 +66,19 @@ class HomeAppBarState extends State<HomeAppBar> {
                 ],
               )),
           const Spacer(),
-          badges.Badge(
-            badgeContent: Text(
-              cartItemCount.toString(),
-              style: const TextStyle(color: Colors.white),
-            ),
-            badgeStyle: const badges.BadgeStyle(
-                badgeColor: Color.fromARGB(255, 253, 62, 62)),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CartScreen()));
-              },
-              child: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Colors.white,
-              ),
+          InkWell(
+            onTap: () {
+              firstName.isNotEmpty
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CartScreen()))
+                  : Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Login()));
+            },
+            child: const Icon(
+              Icons.shopping_bag_outlined,
+              color: Colors.white,
             ),
           )
         ],
