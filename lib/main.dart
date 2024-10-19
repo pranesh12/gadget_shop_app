@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart'; // For kReleaseMode
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
 import 'package:flutter/services.dart';
+import 'package:gadget_shop/screens/front.dart';
 import 'package:gadget_shop/screens/onboarding.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart'; // Your existing onboarding screen
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Your existing onboarding screen
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +21,32 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late SharedPreferences prefs;
+  String email = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDataFromPrefs();
+  }
+
+  Future<void> _loadDataFromPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+
+    String? storedEmail = prefs.getString('email');
+
+    setState(() {
+      email = storedEmail ?? "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +56,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       builder: DevicePreview.appBuilder,
-      home: const Onboarding(),
+      home: email.isNotEmpty ? const Front() : const Onboarding(),
     );
   }
 }

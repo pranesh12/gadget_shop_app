@@ -84,3 +84,38 @@ class MynavigationBar extends HookWidget {
     );
   }
 }
+
+
+     bottomNavigationBar: MynavigationBar(
+        (idx) {
+          // Handle navigation based on the selected index
+          if (idx == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Front()),
+            );
+          } else if (idx == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const Login()), // Assuming you have a Store screen
+            );
+          } else if (idx == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Register()),
+            );
+          } else if (idx == 3) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Profile()),
+            );
+          } else if (idx == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Profile()),
+            );
+          }
+        },
+      ),

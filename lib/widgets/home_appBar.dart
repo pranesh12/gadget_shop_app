@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/cart_screen.dart';
 import 'package:gadget_shop/screens/login.dart';
+import 'package:gadget_shop/screens/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,10 +70,8 @@ class HomeAppBarState extends ConsumerState<HomeAppBar> {
           InkWell(
             onTap: () {
               firstName.isNotEmpty
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CartScreen()))
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Profile()))
                   : Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Login()));
             },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/login.dart';
+import 'package:gadget_shop/screens/order.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -15,6 +16,7 @@ class ProfileState extends State<Profile> {
   String firstName = "";
   String lastName = "";
   String email = "";
+  String id = "";
 
   @override
   void initState() {
@@ -27,11 +29,13 @@ class ProfileState extends State<Profile> {
     String? storedFirstName = prefs.getString('firstName');
     String? storedLastName = prefs.getString('lastName');
     String? storedEmail = prefs.getString('email');
+    String? storedId = prefs.getString('id');
 
     setState(() {
       firstName = storedFirstName ?? "";
       lastName = storedLastName ?? "";
       email = storedEmail ?? "";
+      id = storedId ?? "";
     });
   }
 
@@ -93,7 +97,10 @@ class ProfileState extends State<Profile> {
                 ),
                 _buildSettingOption(Icons.shopping_cart, "Orders",
                     "View and manage your orders", () {
-                  // Add functionality here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Order(id: id)),
+                  );
                 }),
                 email.isNotEmpty
                     ? _buildSettingOption(

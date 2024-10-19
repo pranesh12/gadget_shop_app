@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -37,6 +38,9 @@ class LoginState extends State<Login> {
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         final response = await http.post(
           url,
@@ -50,6 +54,9 @@ class LoginState extends State<Login> {
         );
 
         if (response.statusCode == 200) {
+          setState(() {
+            _isLoading = false;
+          });
           final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
           final Map<String, dynamic> userData = responseBody['data'];
@@ -65,14 +72,27 @@ class LoginState extends State<Login> {
           await prefs.setString('token', user.token);
 
           // Navigate to the front screen
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Login successful!"),
+              duration: Duration(seconds: 1), // Duration of the message
+            ),
+          );
           if (mounted) {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const Front()));
           }
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           _showError('Login failed. Please check your credentials.');
         }
       } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
         _showError('User login failed. Please try again later.');
       }
     }
@@ -177,12 +197,17 @@ class LoginState extends State<Login> {
                       color: Colors.blue,
                     ),
                     child: InkWell(
-                      onTap: _login,
-                      child: const Center(
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
+                      onTap: _isLoading ? null : _login,
+                      child: Center(
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Sign In",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
                       ),
                     ),
                   ),

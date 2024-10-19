@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gadget_shop/screens/home.dart';
 
 class Onboarding extends StatefulWidget {
-  const Onboarding({Key? key}) : super(key: key);
+  const Onboarding({super.key});
 
   @override
-  _OnboardingState createState() => _OnboardingState();
+  OnboardingState createState() => OnboardingState();
 }
 
-class _OnboardingState extends State<Onboarding> {
-  PageController _pageController = PageController();
+class OnboardingState extends State<Onboarding> {
+  final PageController _pageController = PageController();
   int _currentPage = 0;
 
   @override
@@ -76,7 +76,7 @@ class _OnboardingState extends State<Onboarding> {
                     onPressed: () {
                       // Go to next page
                       _pageController.nextPage(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
                     },
