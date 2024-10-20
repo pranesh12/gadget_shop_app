@@ -17,6 +17,7 @@ class ProfileState extends State<Profile> {
   String lastName = "";
   String email = "";
   String id = "";
+  String token = "";
 
   @override
   void initState() {
@@ -30,12 +31,14 @@ class ProfileState extends State<Profile> {
     String? storedLastName = prefs.getString('lastName');
     String? storedEmail = prefs.getString('email');
     String? storedId = prefs.getString('id');
+    String? stroedToken = prefs.getString('token');
 
     setState(() {
       firstName = storedFirstName ?? "";
       lastName = storedLastName ?? "";
       email = storedEmail ?? "";
       id = storedId ?? "";
+      token = stroedToken ?? "";
     });
   }
 
@@ -99,7 +102,11 @@ class ProfileState extends State<Profile> {
                     "View and manage your orders", () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Order(id: id)),
+                    MaterialPageRoute(
+                        builder: (context) => Order(
+                              email: email,
+                              token: token,
+                            )),
                   );
                 }),
                 email.isNotEmpty
