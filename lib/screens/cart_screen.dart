@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:gadget_shop/providers/cart_provider.dart';
-import 'package:gadget_shop/screens/checkout.dart';
-import 'package:gadget_shop/screens/front.dart';
+import 'package:kick_start/providers/cart_provider.dart';
+import 'package:kick_start/screens/checkout.dart';
+import 'package:kick_start/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:gadget_shop/models/cart.dart';
+import 'package:kick_start/models/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // Make sure you import your Cart model
 

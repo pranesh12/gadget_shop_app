@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/models/user.dart';
-import 'package:gadget_shop/screens/front.dart';
-import 'package:gadget_shop/screens/register.dart';
+import 'package:kick_start/models/user.dart';
+import 'package:kick_start/screens/front.dart';
+import 'package:kick_start/screens/register.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

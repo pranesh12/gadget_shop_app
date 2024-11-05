@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/constants/api_endpoint.dart';
-import 'package:gadget_shop/providers/cart_provider.dart';
-import 'package:gadget_shop/screens/front.dart';
+import 'package:kick_start/constants/api_endpoint.dart';
+import 'package:kick_start/providers/cart_provider.dart';
+import 'package:kick_start/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -21,11 +21,12 @@ class CheckoutState extends ConsumerState<Checkout> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _phone = TextEditingController();
-  final TextEditingController _email = TextEditingController();
+
   String firstName = "";
   String lastName = "";
   String userId = "";
   String token = "";
+  String email = "";
   bool isLoading = false; // Loading state
 
   int cartItemCount = 0;
@@ -42,12 +43,14 @@ class CheckoutState extends ConsumerState<Checkout> {
     String? storedLastName = prefs.getString('lastName');
     String? storedid = prefs.getString('id');
     String? storedToken = prefs.getString('token');
+    String? storedEmail = prefs.getString('email');
 
     setState(() {
       firstName = storedFirstName ?? "";
       lastName = storedLastName ?? "";
       userId = storedid ?? "";
       token = storedToken ?? "";
+      email = storedEmail ?? "";
     });
   }
 
@@ -65,7 +68,7 @@ class CheckoutState extends ConsumerState<Checkout> {
       final orderData = {
         'user': userId,
         'name': '$firstName $lastName',
-        'email': _email.text,
+        'email': email,
         'address': _address.text,
         'phone': _phone.text,
         'totalAmount': total,
@@ -117,7 +120,6 @@ class CheckoutState extends ConsumerState<Checkout> {
                 // Clear form fields
                 _address.clear();
                 _phone.clear();
-                _email.clear();
 
                 Navigator.of(context).pop(); // Close the dialog
 
@@ -218,26 +220,6 @@ class CheckoutState extends ConsumerState<Checkout> {
                   const SizedBox(height: 20),
 
                   // Email field
-                  TextFormField(
-                    controller: _email,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      } else if (!RegExp(
-                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                          .hasMatch(value)) {
-                        return 'Please enter a valid email address';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
 
                   // Submit button with a spinner
                   Container(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/screens/login.dart';
+import 'package:kick_start/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

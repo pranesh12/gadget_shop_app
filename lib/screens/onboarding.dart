@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/screens/home.dart';
+import 'package:kick_start/screens/home.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});

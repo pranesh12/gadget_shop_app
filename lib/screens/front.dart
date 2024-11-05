@@ -1,20 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/constants/api_endpoint.dart';
-import 'package:gadget_shop/models/product.dart';
-import 'package:gadget_shop/providers/product_provider.dart';
-import 'package:gadget_shop/screens/cart_screen.dart';
-import 'package:gadget_shop/screens/home.dart';
-import 'package:gadget_shop/screens/login.dart';
-import 'package:gadget_shop/screens/profile.dart';
-import 'package:gadget_shop/screens/register.dart';
-import 'package:gadget_shop/screens/search_screen.dart';
-import 'package:gadget_shop/screens/store.dart';
-import 'package:gadget_shop/widgets/carousel.dart';
-import 'package:gadget_shop/widgets/category_list.dart';
-import 'package:gadget_shop/widgets/home_appbar.dart';
-import 'package:gadget_shop/widgets/product/product_card.dart';
-import 'package:gadget_shop/widgets/search_item.dart';
+import 'package:kick_start/constants/api_endpoint.dart';
+import 'package:kick_start/models/product.dart';
+import 'package:kick_start/providers/product_provider.dart';
+import 'package:kick_start/screens/cart_screen.dart';
+import 'package:kick_start/screens/home.dart';
+import 'package:kick_start/screens/login.dart';
+import 'package:kick_start/screens/profile.dart';
+import 'package:kick_start/screens/register.dart';
+import 'package:kick_start/screens/search_screen.dart';
+import 'package:kick_start/screens/store.dart';
+import 'package:kick_start/widgets/carousel.dart';
+import 'package:kick_start/widgets/category_list.dart';
+import 'package:kick_start/widgets/home_appbar.dart';
+import 'package:kick_start/widgets/product/product_card.dart';
+import 'package:kick_start/widgets/product_card_skeleton.dart';
+import 'package:kick_start/widgets/search_item.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -72,21 +73,21 @@ class FrontState extends ConsumerState<Front> {
                     },
                     child: const SearchItem()),
                 const SizedBox(height: 14),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 15, top: 10),
-                  child: const Text(
-                    "Categories",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   alignment: Alignment.centerLeft,
+                //   margin: const EdgeInsets.only(left: 15, top: 10),
+                //   child: const Text(
+                //     "Categories",
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 20,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 14),
-                const CategoryList(),
-                const SizedBox(height: 14),
+                // const CategoryList(),
+                // const SizedBox(height: 14),
               ],
             ),
           ),
@@ -100,10 +101,11 @@ class FrontState extends ConsumerState<Front> {
             ),
             child: Column(
               children: [
-                const Carousel(),
-                ProductCard(
-                  products: products,
-                ),
+                products.isEmpty
+                    ? const ProductCardSkeleton()
+                    : ProductCard(
+                        products: products,
+                      ),
               ],
             ),
           ),

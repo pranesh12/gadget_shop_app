@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/screens/login.dart';
-import 'package:gadget_shop/screens/order.dart';
+import 'package:kick_start/screens/login.dart';
+import 'package:kick_start/screens/order.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {

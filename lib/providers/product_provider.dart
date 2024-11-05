@@ -1,4 +1,4 @@
-import 'package:gadget_shop/models/product.dart';
+import 'package:kick_start/models/product.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // StateNotifier to manage the list of products

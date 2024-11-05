@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart'; // For kReleaseMode
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
 import 'package:flutter/services.dart';
-import 'package:gadget_shop/screens/front.dart';
-import 'package:gadget_shop/screens/onboarding.dart';
+import 'package:kick_start/screens/front.dart';
+import 'package:kick_start/screens/onboarding.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Your existing onboarding screen
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/models/product.dart'; // Assuming you have a Product model
-import 'package:gadget_shop/providers/product_provider.dart'; // Assuming you have a ProductProvider for fetching products
-import 'package:gadget_shop/screens/product_details.dart';
+import 'package:kick_start/models/product.dart'; // Assuming you have a Product model
+import 'package:kick_start/providers/product_provider.dart'; // Assuming you have a ProductProvider for fetching products
+import 'package:kick_start/screens/product_details.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {

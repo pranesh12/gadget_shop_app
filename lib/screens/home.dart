@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/screens/front.dart';
-import 'package:gadget_shop/screens/login.dart';
-import 'package:gadget_shop/screens/profile.dart';
-import 'package:gadget_shop/screens/register.dart';
+import 'package:kick_start/screens/front.dart';
+import 'package:kick_start/screens/login.dart';
+import 'package:kick_start/screens/profile.dart';
+import 'package:kick_start/screens/register.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
 

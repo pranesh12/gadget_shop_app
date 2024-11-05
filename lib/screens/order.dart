@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gadget_shop/constants/api_endpoint.dart';
+import 'package:kick_start/constants/api_endpoint.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Needed for parsing JSON
 import 'package:intl/intl.dart'; // For formatting date

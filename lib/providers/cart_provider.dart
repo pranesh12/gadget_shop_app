@@ -1,4 +1,4 @@
-import 'package:gadget_shop/models/cart.dart';
+import 'package:kick_start/models/cart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CartNotifier extends StateNotifier<List<Cart>> {
