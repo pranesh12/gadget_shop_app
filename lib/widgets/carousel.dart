@@ -5,10 +5,10 @@ class Carousel extends StatefulWidget {
   const Carousel({super.key});
 
   @override
-  _CarouselState createState() => _CarouselState();
+  CarouselState createState() => CarouselState();
 }
 
-class _CarouselState extends State<Carousel> {
+class CarouselState extends State<Carousel> {
   final PageController _controller = PageController();
 
   @override
@@ -20,7 +20,7 @@ class _CarouselState extends State<Carousel> {
           child: Container(
             padding: const EdgeInsets.all(25),
             height: 250,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white, // Background color for better visualization
             ),
             child: PageView(

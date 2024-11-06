@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kick_start/screens/cart_screen.dart';
-import 'package:kick_start/screens/login.dart';
-import 'package:kick_start/screens/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
