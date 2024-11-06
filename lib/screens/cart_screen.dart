@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:kick_start/providers/cart_provider.dart';
 import 'package:kick_start/screens/checkout.dart';
-import 'package:kick_start/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kick_start/models/cart.dart';
 import 'package:kick_start/screens/login.dart';
@@ -124,7 +123,10 @@ class CartScreenState extends ConsumerState<CartScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text(cartItem.title), // Product title
+                                          Text(
+                                            cartItem.title,
+                                            overflow: TextOverflow.ellipsis,
+                                          ), // Product title
                                           const SizedBox(width: 10),
                                           const badges.Badge(
                                             badgeStyle: badges.BadgeStyle(

@@ -58,7 +58,6 @@ class CheckoutState extends ConsumerState<Checkout> {
   Future<void> _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
       final total = widget.total;
-
       // Show loading spinner
       setState(() {
         isLoading = true;
@@ -91,8 +90,11 @@ class CheckoutState extends ConsumerState<Checkout> {
 
         if (res.statusCode == 200) {
           // Show success dialog
-          _showSuccessDialog();
+          await _showSuccessDialog();
           ref.read(cartProvider.notifier).clearCart();
+          if (mounted) {
+            await Navigator.pushNamed(context, "/");
+          }
         } else {
           // Show failure dialog
           _showFailureDialog();
@@ -107,8 +109,8 @@ class CheckoutState extends ConsumerState<Checkout> {
     }
   }
 
-  void _showSuccessDialog() {
-    showDialog(
+  Future<void> _showSuccessDialog() async {
+    await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -116,15 +118,12 @@ class CheckoutState extends ConsumerState<Checkout> {
           content: const Text("Order successfully created."),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 // Clear form fields
                 _address.clear();
                 _phone.clear();
 
                 Navigator.of(context).pop(); // Close the dialog
-
-                // Navigate to another route (e.g., OrderSummary page)
-                Navigator.pushNamed(context, "/");
               },
               child: const Text("OK"),
             ),

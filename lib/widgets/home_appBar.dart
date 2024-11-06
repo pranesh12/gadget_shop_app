@@ -67,19 +67,19 @@ class HomeAppBarState extends ConsumerState<HomeAppBar> {
                 ],
               )),
           const Spacer(),
-          InkWell(
-            onTap: () {
-              firstName.isNotEmpty
-                  ? Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Profile()))
-                  : Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Login()));
-            },
-            child: const Icon(
-              Icons.shopping_bag_outlined,
-              color: Colors.white,
-            ),
-          )
+          // InkWell(
+          //   onTap: () {
+          //     firstName.isNotEmpty
+          //         ? Navigator.push(context,
+          //             MaterialPageRoute(builder: (context) => const Profile()))
+          //         : Navigator.push(context,
+          //             MaterialPageRoute(builder: (context) => const Login()));
+          //   },
+          //   child: const Icon(
+          //     Icons.shopping_bag_outlined,
+          //     color: Colors.white,
+          //   ),
+          // )
         ],
       ),
     );

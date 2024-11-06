@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart'; // For kReleaseMode
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
 import 'package:flutter/services.dart';
+import 'package:kick_start/screens/cart_screen.dart';
 import 'package:kick_start/screens/front.dart';
 import 'package:kick_start/screens/login.dart';
 import 'package:kick_start/screens/onboarding.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kick_start/screens/profile.dart';
 import 'package:kick_start/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,6 +59,8 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => isLoggedIn ? const Front() : const Onboarding(),
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
+        '/profile': (context) => const Profile(),
+        '/cart': (context) => const CartScreen(),
       },
       title: 'Onboarding Screen',
       theme: ThemeData(
