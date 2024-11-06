@@ -45,13 +45,16 @@ class ProductDetailsState extends ConsumerState<ProductDetails> {
         SnackBar(
           content:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              "${product.title} added to cart!",
-              overflow: TextOverflow.ellipsis,
+            Flexible(
+              child: Text(
+                "${product.title} added to cart!",
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             InkWell(
               child: const Text(
                 "View",
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Color.fromARGB(255, 72, 59, 255)),
               ),
               onTap: () {

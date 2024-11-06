@@ -124,7 +124,9 @@ class CartScreenState extends ConsumerState<CartScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            cartItem.title,
+                                            cartItem.title.length > 20
+                                                ? "${cartItem.title.substring(0, 20)}..."
+                                                : cartItem.title,
                                             overflow: TextOverflow.ellipsis,
                                           ), // Product title
                                           const SizedBox(width: 10),
