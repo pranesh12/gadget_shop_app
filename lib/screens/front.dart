@@ -73,21 +73,6 @@ class FrontState extends ConsumerState<Front> {
                     },
                     child: const SearchItem()),
                 const SizedBox(height: 14),
-                // Container(
-                //   alignment: Alignment.centerLeft,
-                //   margin: const EdgeInsets.only(left: 15, top: 10),
-                //   child: const Text(
-                //     "Categories",
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontSize: 20,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(height: 14),
-                // const CategoryList(),
-                // const SizedBox(height: 14),
               ],
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kick_start/constants/api_endpoint.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Needed for parsing JSON
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart'; // For formatting date
 
 class Order extends StatefulWidget {
@@ -41,13 +42,13 @@ class OrderState extends State<Order> {
           isLoading = false;
         });
       } else {
-        print('Error: ${response.statusCode}');
+        debugPrint('Error: ${response.statusCode}');
         setState(() {
           isLoading = false;
         });
       }
     } catch (error) {
-      print('Failed to fetch order: $error');
+      debugPrint('Failed to fetch order: $error');
       setState(() {
         isLoading = false;
       });
@@ -137,20 +138,7 @@ class OrderState extends State<Order> {
                                   ),
                                   const SizedBox(height: 5),
                                   // Customer Name and Email
-                                  Text(
-                                    order['name'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    order['email'],
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
+
                                   const SizedBox(height: 10),
                                   // Order Status
                                   Align(

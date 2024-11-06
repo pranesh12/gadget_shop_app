@@ -1,9 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:kick_start/screens/cart_screen.dart';
 import 'package:kick_start/screens/front.dart';
-import 'package:kick_start/screens/login.dart';
 import 'package:kick_start/screens/profile.dart';
-import 'package:kick_start/screens/register.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,8 +16,7 @@ class HomeState extends State<Home> {
 
   final List<Widget> screens = [
     const Front(),
-    const Login(),
-    const Register(),
+    const CartScreen(),
     const Profile(),
   ];
 
@@ -59,8 +57,7 @@ class MynavigationBar extends StatelessWidget {
     return CurvedNavigationBar(
       items: const [
         Icon(Icons.home),
-        Icon(Icons.login),
-        Icon(Icons.person_add),
+        Icon(Icons.shopping_cart),
         Icon(Icons.person),
       ],
       index: selectedIdx,

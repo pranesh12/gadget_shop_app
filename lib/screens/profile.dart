@@ -100,14 +100,20 @@ class ProfileState extends State<Profile> {
                 ),
                 _buildSettingOption(Icons.shopping_cart, "Orders",
                     "View and manage your orders", () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Order(
-                              email: email,
-                              token: token,
-                            )),
-                  );
+                  email.isEmpty
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()),
+                        )
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Order(
+                                    email: email,
+                                    token: token,
+                                  )),
+                        );
                 }),
                 email.isNotEmpty
                     ? _buildSettingOption(
@@ -119,6 +125,7 @@ class ProfileState extends State<Profile> {
                           lastName = "";
                           email = "";
                         });
+                        Navigator.pushNamed(context, "/");
                       })
                     : _buildSettingOption(
                         Icons.login, "Sign in", "Sign in of your account", () {

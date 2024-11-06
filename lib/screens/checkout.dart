@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kick_start/constants/api_endpoint.dart';
 import 'package:kick_start/providers/cart_provider.dart';
-import 'package:kick_start/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -93,6 +92,7 @@ class CheckoutState extends ConsumerState<Checkout> {
         if (res.statusCode == 200) {
           // Show success dialog
           _showSuccessDialog();
+          ref.read(cartProvider.notifier).clearCart();
         } else {
           // Show failure dialog
           _showFailureDialog();
@@ -124,11 +124,7 @@ class CheckoutState extends ConsumerState<Checkout> {
                 Navigator.of(context).pop(); // Close the dialog
 
                 // Navigate to another route (e.g., OrderSummary page)
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const Front(),
-                  ),
-                );
+                Navigator.pushNamed(context, "/");
               },
               child: const Text("OK"),
             ),

@@ -5,6 +5,7 @@ import 'package:kick_start/screens/checkout.dart';
 import 'package:kick_start/screens/front.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kick_start/models/cart.dart';
+import 'package:kick_start/screens/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // Make sure you import your Cart model
 
@@ -203,12 +204,17 @@ class CartScreenState extends ConsumerState<CartScreen> {
                       // Checkout Button
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Checkout(
-                                        total: totalCost,
-                                      )));
+                          firstName.isEmpty
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Login()))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Checkout(
+                                            total: totalCost,
+                                          )));
                         },
                         child: Container(
                           width: 500,
@@ -241,14 +247,16 @@ class CartScreenState extends ConsumerState<CartScreen> {
                   const Text("No shoes selected"),
                   InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Front()));
+                        Navigator.popAndPushNamed(context, "/");
                       },
-                      child: const Text(
-                        "shop here",
-                        style: TextStyle(color: Colors.blue),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/");
+                        },
+                        child: const Text(
+                          "shop here",
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ))
                 ],
               )));
