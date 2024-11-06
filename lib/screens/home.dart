@@ -5,16 +5,16 @@ import 'package:kick_start/screens/login.dart';
 import 'package:kick_start/screens/profile.dart';
 import 'package:kick_start/screens/register.dart';
 
-import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
-
 class Home extends StatefulWidget {
   const Home({super.key});
+
   @override
   HomeState createState() => HomeState();
 }
 
 class HomeState extends State<Home> {
   int selectedIdx = 0;
+
   final List<Widget> screens = [
     const Front(),
     const Login(),
@@ -33,32 +33,38 @@ class HomeState extends State<Home> {
     return MaterialApp(
       title: "Gadget Shop",
       home: Scaffold(
-        body: screens[selectedIdx],
-        bottomNavigationBar: MynavigationBar(_onTap),
+        body: IndexedStack(
+          index: selectedIdx,
+          children: screens, // Pass the entire list here
+        ),
+        bottomNavigationBar:
+            MynavigationBar(onTap: _onTap, selectedIdx: selectedIdx),
       ),
     );
   }
 }
 
-class MynavigationBar extends HookWidget {
-  const MynavigationBar(this._onTap, {super.key});
-  final void Function(int)? _onTap;
+class MynavigationBar extends StatelessWidget {
+  const MynavigationBar({
+    required this.onTap,
+    required this.selectedIdx,
+    super.key,
+  });
+
+  final void Function(int) onTap;
+  final int selectedIdx;
 
   @override
   Widget build(BuildContext context) {
-    final selectedIdx = useState(0);
     return CurvedNavigationBar(
       items: const [
         Icon(Icons.home),
         Icon(Icons.login),
-        Icon(Icons.login),
         Icon(Icons.person_add),
+        Icon(Icons.person),
       ],
-      index: selectedIdx.value,
-      onTap: (int idx) {
-        selectedIdx.value = idx;
-        _onTap!(idx);
-      },
+      index: selectedIdx,
+      onTap: onTap, // Directly pass the onTap callback here
     );
   }
 }

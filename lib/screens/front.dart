@@ -46,7 +46,7 @@ class FrontState extends ConsumerState<Front> {
       ref.read(productProvider.notifier).setProducts(products);
     } else {
       // Handle error if needed
-      throw Exception('Failed to load products');
+      debugPrint("Something went wrong");
     }
   }
 

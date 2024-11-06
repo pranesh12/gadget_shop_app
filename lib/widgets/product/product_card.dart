@@ -32,7 +32,7 @@ class ProductCardState extends ConsumerState<ProductCard> {
             crossAxisCount: crossAxisCount,
             childAspectRatio: 0.80,
             mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
+            crossAxisSpacing: 17,
           ),
           itemBuilder: (context, index) {
             Product product = widget.products[index];

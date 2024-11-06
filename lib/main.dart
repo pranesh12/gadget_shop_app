@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
 import 'package:flutter/services.dart';
 import 'package:kick_start/screens/front.dart';
+import 'package:kick_start/screens/login.dart';
 import 'package:kick_start/screens/onboarding.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Your existing onboarding screen
+import 'package:kick_start/screens/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late SharedPreferences prefs;
-  String email = "";
+  bool isLoggedIn = false; // Changed to a boolean for better clarity
 
   @override
   void initState() {
@@ -40,23 +42,27 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _loadDataFromPrefs() async {
     prefs = await SharedPreferences.getInstance();
-
     String? storedEmail = prefs.getString('email');
 
     setState(() {
-      email = storedEmail ?? "";
+      isLoggedIn = storedEmail != null && storedEmail.isNotEmpty;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => isLoggedIn ? const Front() : const Onboarding(),
+        '/login': (context) => const Login(),
+        '/register': (context) => const Register(),
+      },
       title: 'Onboarding Screen',
       theme: ThemeData(
         useMaterial3: true,
       ),
       builder: DevicePreview.appBuilder,
-      home: email.isNotEmpty ? const Front() : const Onboarding(),
     );
   }
 }

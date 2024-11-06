@@ -50,11 +50,11 @@ class HomeAppBarState extends ConsumerState<HomeAppBar> {
                 children: [
                   firstName.isEmpty
                       ? const Text(
-                          "Hello  Welcome to",
+                          "Welcome to",
                           style: TextStyle(color: Colors.white),
                         )
                       : Text(
-                          "Hello $firstName $lastName, Welcome to",
+                          "Hello $firstName, Welcome to",
                           style: const TextStyle(color: Colors.white),
                         ),
                   const Text(

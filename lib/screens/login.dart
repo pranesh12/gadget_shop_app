@@ -80,8 +80,7 @@ class LoginState extends State<Login> {
             ),
           );
           if (mounted) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const Front()));
+            Navigator.pushNamed(context, "/");
           }
         } else {
           setState(() {
