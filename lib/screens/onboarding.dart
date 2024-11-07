@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kick_start/screens/home.dart';
+import 'package:kick_start/screens/custom_navigation.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -59,7 +59,8 @@ class OnboardingState extends State<Onboarding> {
                       // Navigate to Main Page directly
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Home()),
+                        MaterialPageRoute(
+                            builder: (context) => const CustomNavigation()),
                       );
                     },
                     child: const Text("Skip"),
@@ -87,7 +88,8 @@ class OnboardingState extends State<Onboarding> {
                       // Navigate to Main Page after final page
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Home()),
+                        MaterialPageRoute(
+                            builder: (context) => const CustomNavigation()),
                       );
                     },
                     child: const Text("Done"),

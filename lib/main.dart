@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview
 import 'package:flutter/services.dart';
 import 'package:kick_start/screens/cart_screen.dart';
-import 'package:kick_start/screens/front.dart';
+import 'package:kick_start/screens/custom_navigation.dart';
 import 'package:kick_start/screens/login.dart';
 import 'package:kick_start/screens/onboarding.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -56,7 +56,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => isLoggedIn ? const Front() : const Onboarding(),
+        '/': (context) =>
+            isLoggedIn ? const CustomNavigation() : const Onboarding(),
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
         '/profile': (context) => const Profile(),

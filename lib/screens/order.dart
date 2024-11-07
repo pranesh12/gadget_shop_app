@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kick_start/constants/api_endpoint.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // Needed for parsing JSON
+import 'dart:convert';
 // ignore: depend_on_referenced_packages
-import 'package:intl/intl.dart'; // For formatting date
+import 'package:intl/intl.dart';
 
 class Order extends StatefulWidget {
   final String email;
@@ -38,7 +38,7 @@ class OrderState extends State<Order> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         setState(() {
-          orders = responseData['data'];
+          orders = List.from(responseData['data'].reversed);
           isLoading = false;
         });
       } else {

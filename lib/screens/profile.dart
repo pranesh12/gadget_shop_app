@@ -98,8 +98,9 @@ class ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                _buildSettingOption(Icons.shopping_cart, "Orders",
-                    "View and manage your orders", () {
+                _buildSettingOption(
+                    Icons.list_alt, "Orders", "View and manage your orders",
+                    () {
                   email.isEmpty
                       ? Navigator.push(
                           context,

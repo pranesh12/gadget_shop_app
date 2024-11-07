@@ -4,14 +4,14 @@ import 'package:kick_start/screens/cart_screen.dart';
 import 'package:kick_start/screens/front.dart';
 import 'package:kick_start/screens/profile.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class CustomNavigation extends StatefulWidget {
+  const CustomNavigation({super.key});
 
   @override
-  HomeState createState() => HomeState();
+  CustomNavigationState createState() => CustomNavigationState();
 }
 
-class HomeState extends State<Home> {
+class CustomNavigationState extends State<CustomNavigation> {
   int selectedIdx = 0;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
@@ -49,11 +49,6 @@ class HomeState extends State<Home> {
           onTap: _onTap,
           selectedIdx: selectedIdx,
           bottomNavigationKey: _bottomNavigationKey,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _goToCartPage,
-          child: const Icon(Icons.shopping_cart),
-          tooltip: 'Go to Cart',
         ),
       ),
     );
